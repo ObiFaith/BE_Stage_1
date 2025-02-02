@@ -27,7 +27,7 @@ class NumberModel(BaseModel):
   digit_sum: int
   fun_fact: str
 
-@app.get('/api/classify-number/', response_model=NumberModel)
+@app.get('/api/classify-number', response_model=NumberModel)
 async def get_number_detail(number: str):
   try:
     number = int(number)
