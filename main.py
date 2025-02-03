@@ -28,13 +28,19 @@ class NumberModel(BaseModel):
   fun_fact: str
 
 @app.get('/api/classify-number', response_model=NumberModel)
-async def get_number_detail(number: str = '0'):
+async def get_number_detail(number: str):
   try:
     number = int(number)
   except ValueError:
     return JSONResponse(
       status_code=400,
       content={"number": number, "error": True}
+    )
+
+  if number < 0:
+    return JSONResponse(
+      status_code=400,
+      content={"number": number, "error": True, "message": "Only positive numbers are allowed."}
     )
 
   async with httpx.AsyncClient() as client:
