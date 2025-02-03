@@ -28,7 +28,7 @@ class NumberModel(BaseModel):
   fun_fact: str
 
 @app.get('/api/classify-number', response_model=NumberModel)
-async def get_number_detail(number: str):
+async def get_number_detail(number: str = '0'):
   try:
     number = int(number)
   except ValueError:

@@ -1,9 +1,10 @@
 def is_armstrong(number):
   sum = 0
+  index = len(str(number))
   digits = [int(digit) for digit in str(number)]
   for digit in digits:
     # get the cube of the digit
-    sum += (digit ** 3)
+    sum += (digit ** index)
   return True if sum == number else False
 
 def digit_sum(number):
