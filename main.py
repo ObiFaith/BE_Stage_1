@@ -1,5 +1,6 @@
 import os
 import httpx
+import asyncio
 from util import *
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -47,19 +48,15 @@ async def get_number_detail(number: str | None = None):
     response = await client.get(f'{NUMBER_URL}/{number}/math')
   fun_fact = response.text
 
-  num_prop = []
-  if number % 2 == 0:
-    num_prop.append('even')
-  else:
-    num_prop.append('odd')
+  is_prime_result, is_perfect_result, properties_result, digit_sum_result = await asyncio.gather(
+    is_prime(number), is_perfect(number), get_num_prop(number), digit_sum(number)
+  )
 
-  if is_armstrong(number):
-    num_prop.insert(0, 'armstrong')
   return NumberModel(
     number=number,
-    is_prime=is_prime(number),
-    is_perfect=is_perfect(number),
-    properties=num_prop,
-    digit_sum=digit_sum(number),
+    is_prime=is_prime_result,
+    is_perfect=is_perfect_result,
+    properties=properties_result,
+    digit_sum=digit_sum_result,
     fun_fact=fun_fact
   )

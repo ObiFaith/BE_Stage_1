@@ -1,4 +1,4 @@
-def is_armstrong(number):
+async def is_armstrong(number):
   if number < 0:
     return False
 
@@ -10,7 +10,7 @@ def is_armstrong(number):
     total += (digit ** index)
   return True if total == number else False
 
-def digit_sum(number):
+async def digit_sum(number):
   if number < 0:
     return number
 
@@ -21,7 +21,7 @@ def digit_sum(number):
     total += digit
   return total
 
-def is_prime(number):
+async def is_prime(number):
   if number <= 1:
     return False
   for i in range(2, number):
@@ -29,7 +29,7 @@ def is_prime(number):
       return False
   return True
 
-def is_perfect(number):
+async def is_perfect(number):
   if number < 1:
     return False
   total = 0
@@ -39,3 +39,15 @@ def is_perfect(number):
   if total == number:
     return True
   return False
+
+async def get_num_prop(number):
+  num_prop = []
+  if number % 2 == 0:
+    num_prop.append('even')
+  else:
+    num_prop.append('odd')
+
+  if is_armstrong(number):
+    num_prop.insert(0, 'armstrong')
+
+  return num_prop
