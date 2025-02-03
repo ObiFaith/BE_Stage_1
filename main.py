@@ -29,7 +29,7 @@ class NumberModel(BaseModel):
 
 @app.get('/api/classify-number', response_model=NumberModel)
 async def get_number_detail(number: str | None = None):
-  if number is None:
+  if number is None or number == "":
     return JSONResponse(
       status_code=400,
       content={"number": None, "error": True}
@@ -43,15 +43,9 @@ async def get_number_detail(number: str | None = None):
       content={"number": number, "error": True}
     )
 
-  if number < 0:
-    return JSONResponse(
-      status_code=400,
-      content={"number": number, "error": True, "message": "Only positive numbers are allowed."}
-    )
-
   async with httpx.AsyncClient() as client:
     response = await client.get(f'{NUMBER_URL}/{number}/math')
-  fun_fact = response.text  # Get the plain text
+  fun_fact = response.text
 
   num_prop = []
   if number % 2 == 0:
