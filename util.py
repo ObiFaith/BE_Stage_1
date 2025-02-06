@@ -12,7 +12,7 @@ async def is_armstrong(number):
 
 async def digit_sum(number):
   if number < 0:
-    return number
+    number = -number
 
   total = 0
   digits = [int(digit) for digit in str(number)]
